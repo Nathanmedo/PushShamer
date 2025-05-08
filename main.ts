@@ -10,7 +10,7 @@ function addComment (url :string, comment_body:string, token:string){
   return makeRequest(url, {
     method: 'POST',
     headers: {
-      'Authorization': 'token ' + token,
+      'Authorization': 'Bearer ' + token,
       'User-Agent': 'ColinEberhardt',
       'Accept': 'application/vnd.github.machine-man-preview+json'
     },
@@ -74,21 +74,24 @@ async function handler(request: Request): Promise<Response>{
   if(payload.pull_request){
     const code = await fetchPRDiff(payload.pull_request)
     const pull_review = await callAIModel(code, "You are a code reviewer. Please review the code and provide feedback.")
+    console.log(pull_review)
     const comment = createAIReviewComment(pull_review || "No response", payload.pull_request.title)
+    console.log(comment)
 
     generateInstallationToken(payload?.installation?.id)
-    .then((token)=> addComment(payload?.pull_request?.comments_url, comment, token || ""));
+    .then((token)=> addComment(payload?.pull_request?.comments_url, comment, token || "")).then((response)=> console.log(response));;
     return new Response("OK", { status: 200 });
   }
   
   if(payload.issue){
     const issue_body = payload.issue.body;
     const issue_response = await callAIModel(issue_body, "You are expected to provide a response to the issue, and request any additional information if necessary")
+    console.log(issue_response)
     const comment = createAIIssueResponse(issue_response || "No response", payload?.issue?.id)
-
+    console.log(comment)
     
     generateInstallationToken(payload?.installation?.id)
-    .then((token)=> addComment(payload?.issue?.comments_url, comment, token || ""));
+    .then((token)=> addComment(payload?.issue?.comments_url, comment, token || "")).then((response)=> console.log(response));
     return new Response("OK", { status: 200 }); 
   }
   }catch(error){

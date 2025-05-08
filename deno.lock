@@ -8,6 +8,7 @@
     "npm:jose@*": "6.0.11",
     "npm:jose@^6.0.11": "6.0.11",
     "npm:jsonwebtoken@^9.0.2": "9.0.2",
+    "npm:openai@*": "4.97.0",
     "npm:openai@^4.97.0": "4.97.0"
   },
   "jsr": {
