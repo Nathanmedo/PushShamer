@@ -2,7 +2,7 @@
 
 An AI-powered GitHub App that reviews your code and provides constructive feedback on pull requests and issues.
 
-![AI Code Reviewer](https://your-image-url.com/ai-code-reviewer.png)
+![AI Code Reviewer](./assets/images/pushshamer-logo.webp)
 
 ## 🚀 Features
 
