@@ -75,7 +75,8 @@ async function handler(request: Request): Promise<Response>{
     const pull_review = await callAIModel(code, "You are a code reviewer. Please review the code and provide feedback.")
     const comment = createAIReviewComment(pull_review || "No response", payload.pull_request.title)
 
-    return addComment(payload?.issue?.comments_url, comment, access_token || "")
+    addComment(payload?.issue?.comments_url, comment, access_token || "")
+    return new Response("OK", { status: 200 });
   }
   
   if(payload.issue){
@@ -83,7 +84,8 @@ async function handler(request: Request): Promise<Response>{
     const issue_response = await callAIModel(issue_body, "You are expected to provide a response to the issue, and request any additional information if necessary")
     const comment = createAIIssueResponse(issue_response || "No response", payload?.issue?.id)
 
-    return addComment(payload?.issue?.comments_url, comment, access_token || "")
+    addComment(payload?.issue?.comments_url, comment, access_token || "")
+    return new Response("OK", { status: 200 }); 
   }
   }catch(error){
     console.log(error)
