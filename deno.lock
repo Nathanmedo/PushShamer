@@ -5,6 +5,8 @@
     "jsr:@std/internal@^1.0.6": "1.0.6",
     "npm:axios@^1.9.0": "1.9.0",
     "npm:dotenv@^16.5.0": "16.5.0",
+    "npm:jose@*": "6.0.11",
+    "npm:jose@^6.0.11": "6.0.11",
     "npm:jsonwebtoken@^9.0.2": "9.0.2",
     "npm:openai@^4.97.0": "4.97.0"
   },
@@ -193,6 +195,9 @@
         "ms"
       ]
     },
+    "jose@6.0.11": {
+      "integrity": "sha512-QxG7EaliDARm1O1S8BGakqncGT9s25bKL1WSf6/oa17Tkqwi8D2ZNglqCF+DsYF88/rV66Q/Q2mFAy697E1DUg=="
+    },
     "jsonwebtoken@9.0.2": {
       "integrity": "sha512-PRp66vJ865SSqOlgqS8hujT5U4AOgMfhrwYIuIhfKaoSCZcirrmASQr8CX7cUg+RMih+hgznrjp99o+W4pJLHQ==",
       "dependencies": [
@@ -328,6 +333,7 @@
       "jsr:@std/assert@1",
       "npm:axios@^1.9.0",
       "npm:dotenv@^16.5.0",
+      "npm:jose@^6.0.11",
       "npm:jsonwebtoken@^9.0.2",
       "npm:openai@^4.97.0"
     ]

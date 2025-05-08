@@ -1,4 +1,5 @@
 import { fetchPRDiff } from "./codeDifference.ts";
+import { generateInstallationToken } from "./installationToken.ts";
 import { callAIModel } from "./model.ts";
 import { makeRequest } from "./requestAsPromise.ts";
 import "https://deno.land/x/dotenv/load.ts";
@@ -75,7 +76,8 @@ async function handler(request: Request): Promise<Response>{
     const pull_review = await callAIModel(code, "You are a code reviewer. Please review the code and provide feedback.")
     const comment = createAIReviewComment(pull_review || "No response", payload.pull_request.title)
 
-    addComment(payload?.issue?.comments_url, comment, access_token || "")
+    generateInstallationToken(payload?.installation?.id)
+    .then((token)=> addComment(payload?.pull_request?.comments_url, comment, token || ""));
     return new Response("OK", { status: 200 });
   }
   
@@ -84,7 +86,9 @@ async function handler(request: Request): Promise<Response>{
     const issue_response = await callAIModel(issue_body, "You are expected to provide a response to the issue, and request any additional information if necessary")
     const comment = createAIIssueResponse(issue_response || "No response", payload?.issue?.id)
 
-    addComment(payload?.issue?.comments_url, comment, access_token || "")
+    
+    generateInstallationToken(payload?.installation?.id)
+    .then((token)=> addComment(payload?.issue?.comments_url, comment, token || ""));
     return new Response("OK", { status: 200 }); 
   }
   }catch(error){
