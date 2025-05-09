@@ -6,7 +6,7 @@ import { makeRequest } from "./requestAsPromise.ts";
 const integrationId = Deno.env.get("APP_ID")
 console.log(integrationId)
 const secret = Deno.readFileSync('pushshamer.2025-05-08.private-key.pem')
-
+console.log(secret)
 async function createToken(payload: JWTPayload){
     const jwt = await new SignJWT(payload)
     .setProtectedHeader({ alg: "HS256" })
@@ -17,9 +17,10 @@ async function createToken(payload: JWTPayload){
     return jwt
 }
 
-const token = createToken({iss: integrationId})
 
 export async function generateInstallationToken(installationId: number){
+    const token = await createToken({iss: integrationId})
+    console.log(token, installationId)
     const url = `https://api.github.com/installations/${installationId}/access_tokens`
     const response = makeRequest(url, {
         method: 'POST',
@@ -30,6 +31,7 @@ export async function generateInstallationToken(installationId: number){
         },
     })
     const data = (await response).json()
+    console.log(data)
 
     return data
 }

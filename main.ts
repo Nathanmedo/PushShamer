@@ -10,7 +10,7 @@ function addComment (url :string, comment_body:string, token:string){
   return makeRequest(url, {
     method: 'POST',
     headers: {
-      'Authorization': 'Bearer ' + token,
+      'Authorization': 'token ' + token,
       'User-Agent': 'ColinEberhardt',
       'Accept': 'application/vnd.github.machine-man-preview+json'
     },
@@ -89,7 +89,9 @@ async function handler(request: Request): Promise<Response>{
     console.log(issue_response)
     const comment = createAIIssueResponse(issue_response || "No response", payload?.issue?.id)
     console.log(comment)
-    
+      
+    console.log(payload?.installation)
+
     generateInstallationToken(payload?.installation?.id)
     .then((token)=> addComment(payload?.issue?.comments_url, comment, token || "")).then((response)=> console.log(response));
     return new Response("OK", { status: 200 }); 
@@ -98,7 +100,7 @@ async function handler(request: Request): Promise<Response>{
     console.log(error)
     throw new Error("Error calling AI model")
   }
-
+ 
   return new Response("OK", { status: 200 });
 }
 
