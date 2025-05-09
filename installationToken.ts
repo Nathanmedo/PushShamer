@@ -44,11 +44,11 @@ console.log(integrationId)
         repo,
       });
       const installationId = data.id;
-  
+      console.log('installationid', installationId)
       // 3. Generate and return token
       const installationOctokit = await app.getInstallationOctokit(installationId);
       const { token } = await installationOctokit.auth({ type: 'installation' }) as { token: string };
-
+      console.log(token)
        return token;
   
     } catch (error) {
