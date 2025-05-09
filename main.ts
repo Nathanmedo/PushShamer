@@ -3,6 +3,8 @@ import { generateInstallationToken } from "./installationToken.ts";
 import { callAIModel } from "./model.ts";
 import { makeRequest } from "./requestAsPromise.ts";
 import "https://deno.land/x/dotenv/load.ts";
+import {} from 'https://deno.land/x/url'
+
 
 const access_token = Deno.env.get("PERSONAL_ACCESS_TOKEN")
 
@@ -96,7 +98,8 @@ async function handler(request: Request): Promise<Response>{
     console.log(comment)
     
     
-    const repoUrl = payload.issue.repository_url;
+    const repoUrl = new URL(payload.issue.repository_url);
+    console.log(repoUrl)
     const [owner, repo] = repoUrl.pathname.split('/').filter(Boolean).slice(-2);
     
     console.log(owner, repo)
