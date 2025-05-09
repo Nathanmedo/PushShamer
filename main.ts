@@ -95,7 +95,6 @@ async function handler(request: Request): Promise<Response>{
     const comment = createAIIssueResponse(issue_response || "No response", payload?.issue?.id)
     console.log(comment)
     
-    console.log(payload?.installation)
     
     const repoUrl = payload.issue.repository_url;
     const [owner, repo] = repoUrl.pathname.split('/').filter(Boolean).slice(-2);
