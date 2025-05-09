@@ -3,7 +3,6 @@ import { generateInstallationToken } from "./installationToken.ts";
 import { callAIModel } from "./model.ts";
 import { makeRequest } from "./requestAsPromise.ts";
 import "https://deno.land/x/dotenv/load.ts";
-import {} from 'https://deno.land/x/url'
 
 
 const access_token = Deno.env.get("PERSONAL_ACCESS_TOKEN")
