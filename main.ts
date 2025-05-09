@@ -78,7 +78,12 @@ async function handler(request: Request): Promise<Response>{
     const comment = createAIReviewComment(pull_review || "No response", payload.pull_request.title)
     console.log(comment)
 
-    generateInstallationToken(payload?.installation?.id)
+    const owner = payload.repository.owner.login;
+    const repo = payload.repository.name
+    console.log(owner, repo)
+    
+    
+    generateInstallationToken({owner, repo})
     .then((token)=> addComment(payload?.pull_request?.comments_url, comment, token || "")).then((response)=> console.log(response));;
     return new Response("OK", { status: 200 });
   }
@@ -89,10 +94,15 @@ async function handler(request: Request): Promise<Response>{
     console.log(issue_response)
     const comment = createAIIssueResponse(issue_response || "No response", payload?.issue?.id)
     console.log(comment)
-      
+    
     console.log(payload?.installation)
+    
+    const repoUrl = payload.issue.repository_url;
+    const [owner, repo] = repoUrl.pathname.split('/').filter(Boolean).slice(-2);
+    
+    console.log(owner, repo)
 
-    generateInstallationToken(payload?.installation?.id)
+    generateInstallationToken({owner, repo})
     .then((token)=> addComment(payload?.issue?.comments_url, comment, token || "")).then((response)=> console.log(response));
     return new Response("OK", { status: 200 }); 
   }
